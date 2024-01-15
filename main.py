@@ -89,8 +89,16 @@ class boss:
             exit()
 
 class tutorial_guy:
-    def __init__(self, pos, talk_with):
-        pass
+    def __init__(self, pos):
+        self.pos = pos
+        self.symbol = "🯆"
+        self.hasCollision = True
+
+    def interact(self, player):
+        if player.item == None:
+            player.current_room.textbox = "There's a big ol' slime causing a ruckus!\n It's been making a huge mess around here."
+        else:
+            player.current_room.textbox = tutorial_guy_text[player.item.item_name]
 
 class item:
     def __init__(self, item_name, pickup_item_text, holding_item_text, pos, symbol, hasCollision, canPickUp):
