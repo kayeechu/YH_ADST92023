@@ -89,9 +89,9 @@ class boss:
             exit()
 
 class tutorial_guy:
-    def __init__(self, pos):
+    def __init__(self, pos, symbol):
         self.pos = pos
-        self.symbol = "🯆"
+        self.symbol = symbol
         self.hasCollision = True
 
     def interact(self, player):
@@ -145,13 +145,14 @@ def instantiate_game(name):
     sword = item("sword", item_pickup["sword"], item_fail_pickup["sword"], (17, 4), "🗡", False, True)
     chainsaxe = item("greg's chainsaw axe", item_pickup["chainsaxe"], item_fail_pickup["chainsaxe"], (17, 4), "🪓", False, True)
     chocolate = item("hershey's", item_pickup["chocolate"], item_fail_pickup["chocolate"], (1,5), "⌧", False, True)
+    old_man = tutorial_guy((8, 4), "🯆")
 
     slime0 = boss((35, 3),"╭")
     slime1 = boss((35, 4),"🤇")
     slime2 = boss((35, 5),"╰")
     
     room1 = room([chocolate], room_bgs[0], room_descriptions[0], room_bitmaps[0])
-    room2 = room([], room_bgs[1], room_descriptions[1], room_bitmaps[1])
+    room2 = room([old_man], room_bgs[1], room_descriptions[1], room_bitmaps[1])
     room3 = room([], room_bgs[2], room_descriptions[2], room_bitmaps[2])
     room4 = room([stick], room_bgs[3], room_descriptions[3], room_bitmaps[3])
     room5 = room([slime0, slime1, slime2], room_bgs[4], room_descriptions[4], room_bitmaps[4])
