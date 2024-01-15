@@ -73,16 +73,20 @@ class player:
             pass
 
 class boss:
-    def __init__(self, pos, symbol):
+    def __init__(self, pos, symbol, weapon_room, next_weapon):
         self.pos = pos
         self.hasCollision = True
         self.symbol = symbol
+        self.weapon_room = weapon_room
+        self.next_weapon = next_weapon
 
     def interact(self, player):
         if player.item is None:
             player.current_room.textbox = "You wave to the slime. It is quite intimidating, so maybe you won't do that again."
         elif player.item is not chocolate:
             player.current_room.textbox = boss_text[player.item.item_name]
+            if self.next_weapon[player.item.item_name] != None:
+                self.weapon_room.item_list.append(self.next_weapon[player.item.item_name])
             player.item = None
         else:
             print("you win!")
@@ -138,14 +142,23 @@ def instantiate_game(name):
     chainsaxe = item("greg's chainsaw axe", item_pickup["chainsaxe"], item_fail_pickup["chainsaxe"], (17, 4), "🪓", False, True)
     chocolate = item("hershey's", item_pickup["chocolate"], item_fail_pickup["chocolate"], (1,5), "⌧", False, True)
 
-    slime0 = boss((35, 3),"╭")
-    slime1 = boss((35, 4),"🤇")
-    slime2 = boss((35, 5),"╰")
-    
+    slime_next_weapon={
+        "duck": None,
+        "stick": sword,
+        "sword": chainsaxe,
+        "greg's chainsaw axe": None,
+        "hershey's": None
+    }
+
     room1 = room([chocolate], room_bgs[0], room_descriptions[0], room_bitmaps[0])
     room2 = room([], room_bgs[1], room_descriptions[1], room_bitmaps[1])
     room3 = room([], room_bgs[2], room_descriptions[2], room_bitmaps[2])
     room4 = room([stick], room_bgs[3], room_descriptions[3], room_bitmaps[3])
+
+    slime0 = boss((35, 3),"╭", room4, slime_next_weapon)
+    slime1 = boss((35, 4),"🤇", room4, slime_next_weapon)
+    slime2 = boss((35, 5),"╰", room4, slime_next_weapon)
+
     room5 = room([slime0, slime1, slime2], room_bgs[4], room_descriptions[4], room_bitmaps[4])
 
     door1_2_0 = door((5,8),(7,1), room2)

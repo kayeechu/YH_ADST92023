@@ -123,7 +123,9 @@ item_fail_pickup={
 boss_text={
     "stick": "You hurl the stick into the slime.\nIt slowly melts into its insides, sizzles, and becomes a part of the slime.\nThe slime does not seem too happy about this.",
     "sword": "With all your might, you thrust the stick into the slime.\nIt gets stuck.\nLooks like you have no more sword. Oops!",
-    "chainsaxe": "You turn on the chainsaw-axe.\nBits of slime come flying all over the place... for a little bit.\nThe slime promptly absorbs it.\nEventually, the chainsaw-axe dissolves into the slime.\nWell, so much for that...",
-    "duck": "You try to gain your composure as you gently lob the duck at the slime.\nThe duck melts into rubber, slowly becoming one with the slime.\nThe slime seems unharmed, but mildly annoyed."
+    "greg's chainsaw axe": "You turn on the chainsaw-axe.\nBits of slime come flying all over the place... for a little bit.\nThe slime promptly absorbs it.\nEventually, the chainsaw-axe dissolves into the slime.\nWell, so much for that...",
+    "duck": "You try to gain your composure as you gently lob the duck at the slime.\nThe duck melts into rubber, slowly becoming one with the slime.\nThe slime seems unharmed, but mildly annoyed.",
+    "hershey's": "you win!"
 }
+
 
