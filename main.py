@@ -3,8 +3,14 @@ import os
 import readchar
 from gamedata import *
 
+#You need to write a function that replaces a character at a particular position ("i") in a string with "symbol".
+#You are given the string you need to alter ("str"), the position ("i"), and the "symbol".
+#You must return the altered string.
+#Hint: a string is just a list of characters, remember lists in computer language always with 0.
 def splice_string(str, i, symbol):
-    return str[0:i] + symbol + str[i + 1:len(str)]
+
+    #write your code here!
+    pass #delete "pass" once you have written code
 
 class room:
     def __init__(self, item_list, room_image, room_description, collision_bitmap):
@@ -18,14 +24,20 @@ class room:
     def show_room(self):
         room_background = self.room_image.splitlines()
 
+        #item generation on the room background image, splice string is used to generate items
         for item in self.item_list:
             room_background[item.pos[1]] = splice_string(room_background[item.pos[1]], item.pos[0], item.symbol)
 
         print("\033[H") #moves cursor back to original position
+
+        #since we split apart our room background image, we have to join it together again
         print("\n".join(room_background) + "\n")
         print(self.room_description)
         print(self.textbox)
 
+    #a function that updates the room bitmap to indicate what tile is which type.
+    #type 1 is a wall, 2 is a walkable item (player can walk through it), 3 is a collidable item. 0 is an empty, regular tile.
+    #called every time a room is shown.
     def update_collision(self):
         for item in self.item_list:
             if not isinstance(item, player):
@@ -41,22 +53,23 @@ class player:
         self.current_room = current_room
         self.symbol = name[0]
 
+    #You will need to write the conditional logic that processes character movement.
+    #'w' and 'q' is already done as an example. There is nothing to return.
     def handle_player_input(self, user_input):
         (x, y) = self.pos
-        match user_input:
-            case 'w':
-                self.handle_tile_type((x, y - 1))
-            case 'a':
-                self.handle_tile_type((x - 1, y))
-            case 's':
-                self.handle_tile_type((x, y + 1))
-            case 'd':
-                self.handle_tile_type((x + 1, y))
-            case 'q':
-                exit()
-            case other:
-                pass
 
+        if user_input == 'w':
+            self.handle_tile_type((x, y - 1))
+
+        #write your code here!
+            
+        
+        elif 'q':
+            exit()
+        else:
+            pass
+
+    #checks the properties of the tile the player will move into. Based on tile type defined in the bitmap, there may be item interactions.
     def handle_tile_type(self, new_pos):
         (new_x, new_y) = new_pos
 
@@ -70,6 +83,28 @@ class player:
                     item.interact(self)
                     break
         else:
+            pass
+
+#Here is the start of all item/npc classes, each follows a similar format, with a constructor and an interact function.
+#The interact function sets the text the terminal will display when the player walks into it. 
+class item:
+    def __init__(self, item_name, pickup_item_text, holding_item_text, pos, symbol, hasCollision, canPickUp):
+        self.item_name = item_name
+        self.pickup_item_text = pickup_item_text
+        self.holding_item_text = holding_item_text
+        self.pos = pos
+        self.symbol = symbol
+        self.hasCollision = hasCollision
+        self.canPickUp = canPickUp
+
+    def interact(self, player):
+        if player.item == None:
+            player.current_room.textbox = self.pickup_item_text
+            if self.canPickUp:
+                player.item = self
+                player.current_room.item_list.remove(self)
+        else:
+            player.current_room.textbox = self.holding_item_text
             pass
 
 class boss:
@@ -105,26 +140,6 @@ class tutorial_guy:
         else:
             player.current_room.textbox = tutorial_guy_text[player.item.item_name]
 
-class item:
-    def __init__(self, item_name, pickup_item_text, holding_item_text, pos, symbol, hasCollision, canPickUp):
-        self.item_name = item_name
-        self.pickup_item_text = pickup_item_text
-        self.holding_item_text = holding_item_text
-        self.pos = pos
-        self.symbol = symbol
-        self.hasCollision = hasCollision
-        self.canPickUp = canPickUp
-
-    def interact(self, player):
-        if player.item == None:
-            player.current_room.textbox = self.pickup_item_text
-            if self.canPickUp:
-                player.item = self
-                player.current_room.item_list.remove(self)
-        else:
-            player.current_room.textbox = self.holding_item_text
-            pass
-
 class door:
     def __init__(self, pos, new_pos, new_room):
         self.pos = pos
@@ -149,9 +164,12 @@ def instantiate_game(name):
     stick = item("stick", item_pickup["stick"], item_fail_pickup["stick"], (17, 4), "ᚬ", False, True)
     sword = item("sword", item_pickup["sword"], item_fail_pickup["sword"], (17, 4), "🗡", False, True)
     chainsaxe = item("greg's chainsaw axe", item_pickup["chainsaxe"], item_fail_pickup["chainsaxe"], (17, 4), "🪓", False, True)
+    #Initialize your strongest weapon here! Remember to add your weapon to the "slime_next_weapon" dictionary down below and add text to the gamedata.py file.
+
     chocolate = item("hershey's", item_pickup["chocolate"], item_fail_pickup["chocolate"], (1,5), "⌧", False, True)
     old_man = tutorial_guy((8, 4), "🯆")
 
+    #Add your weapon here!
     slime_next_weapon={
         "duck": None,
         "stick": sword,
@@ -220,11 +238,9 @@ if __name__ == '__main__':
     player_name = input("What is your name?\n\t")
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("\033[H") #special character to clear the terminal
+    print("\033[H")
 
     instantiate_game(player_name)
-
-    # door1_2 = door((15, 3), (5, 1), room2)
     
     room3.show_room()
 
