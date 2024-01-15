@@ -89,7 +89,8 @@ class boss:
                 self.weapon_room.item_list.append(self.next_weapon[player.item.item_name])
             player.item = None
         else:
-            print("you win!")
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(win_screen)
             exit()
 
 class tutorial_guy:
