@@ -127,10 +127,10 @@ class door:
         os.system('cls' if os.name == 'nt' else 'clear')
     
 
-def instantiate_game():
+def instantiate_game(name):
     global room1, room2, room3, room4, room5
     global door1_2_0, door1_2_1, door1_2_2, door3_2, door4_2_0, door4_2_1, door4_2_2, door5_2, door2_1_0, door2_1_1, door2_1_2, door2_3, door2_4_0, door2_4_1, door2_4_2, door2_5
-    global stick, sword, chainsaxe, rubberducky, chocolate
+    global stick, sword, chainsaxe, rubberducky, chocolate, user
 
     rubberducky = item("duck", item_pickup["duck"], item_fail_pickup["duck"], (17, 4), "🦆", False, True)
     stick = item("stick", item_pickup["stick"], item_fail_pickup["stick"], (17, 4), "ᚬ", False, True)
@@ -182,6 +182,14 @@ def instantiate_game():
     room2.item_list.append(door2_4_2)
     room2.item_list.append(door2_5)
 
+    user = player(name, (2,3), room3)
+    user.item = rubberducky
+    room1.item_list.append(user)
+    room2.item_list.append(user)
+    room3.item_list.append(user)
+    room4.item_list.append(user)
+    room5.item_list.append(user)
+
 if __name__ == '__main__':
     os.system("") # enables ansi escape characters in terminal
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -191,17 +199,10 @@ if __name__ == '__main__':
     os.system('cls' if os.name == 'nt' else 'clear')
     print("\033[H") #special character to clear the terminal
 
-    instantiate_game()
+    instantiate_game(player_name)
 
     # door1_2 = door((15, 3), (5, 1), room2)
     
-    user = player(player_name, (2,3), room3)
-    user.item = rubberducky
-    room1.item_list.append(user)
-    room2.item_list.append(user)
-    room3.item_list.append(user)
-    room4.item_list.append(user)
-    room5.item_list.append(user)
     room3.show_room()
 
     while(True):
