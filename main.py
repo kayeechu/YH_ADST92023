@@ -93,8 +93,16 @@ class boss:
             exit()
 
 class tutorial_guy:
-    def __init__(self, pos, talk_with):
-        pass
+    def __init__(self, pos, symbol):
+        self.pos = pos
+        self.symbol = symbol
+        self.hasCollision = True
+
+    def interact(self, player):
+        if player.item == None:
+            player.current_room.textbox = "There's a big ol' slime causing a ruckus!\n It's been making a huge mess around here."
+        else:
+            player.current_room.textbox = tutorial_guy_text[player.item.item_name]
 
 class item:
     def __init__(self, item_name, pickup_item_text, holding_item_text, pos, symbol, hasCollision, canPickUp):
@@ -141,6 +149,7 @@ def instantiate_game(name):
     sword = item("sword", item_pickup["sword"], item_fail_pickup["sword"], (17, 4), "🗡", False, True)
     chainsaxe = item("greg's chainsaw axe", item_pickup["chainsaxe"], item_fail_pickup["chainsaxe"], (17, 4), "🪓", False, True)
     chocolate = item("hershey's", item_pickup["chocolate"], item_fail_pickup["chocolate"], (1,5), "⌧", False, True)
+    old_man = tutorial_guy((8, 4), "🯆")
 
     slime_next_weapon={
         "duck": None,
@@ -151,7 +160,7 @@ def instantiate_game(name):
     }
 
     room1 = room([chocolate], room_bgs[0], room_descriptions[0], room_bitmaps[0])
-    room2 = room([], room_bgs[1], room_descriptions[1], room_bitmaps[1])
+    room2 = room([old_man], room_bgs[1], room_descriptions[1], room_bitmaps[1])
     room3 = room([], room_bgs[2], room_descriptions[2], room_bitmaps[2])
     room4 = room([stick], room_bgs[3], room_descriptions[3], room_bitmaps[3])
 

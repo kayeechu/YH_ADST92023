@@ -128,4 +128,11 @@ boss_text={
     "hershey's": "you win!"
 }
 
+tutorial_guy_text={
+    "duck": "What a cute little rubber ducky you got there. Planning to do some coding with it?",
+    "stick": "Got yourself a mighty fine stick there, eh?\n Might work on the slime!",
+    "sword": "I see you've decided to take the advice of an ancient, wise sage. \n You know how dangerous it is to go alone!",
+    "greg's chainsaw axe": "That's one heck of a scaaaaaary weapon you got there kiddo,\n careful not to cut yourself!",
+    "hershey's": "Looking to get something for your date eh?\n I'm sure they'll love it."
 
+}
